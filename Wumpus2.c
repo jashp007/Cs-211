@@ -315,7 +315,7 @@ void arrowShooting(struct GameInfo *gameInfo, int **Rooms, bool *personIsAlive,
           }
           if (gameInfo->playerRoom == gameInfo->arrow) {
             printf("You just shot yourself, and are dying.\n"
-                   "It didn't take long, you are dead.\n");
+                   "It didn't take long, you're dead.\n");
             *personIsAlive = false;
             return;
           }

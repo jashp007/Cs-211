@@ -324,7 +324,7 @@ void arrowShooting(struct GameInfo *gameInfo, int **Rooms, bool *personIsAlive,
         i++;
       }
       gameInfo->wumpusRoom = Rooms[gameInfo->wumpusRoom][0];
-
+      gameInfo->arrow = Rooms[gameInfo->playerRoom][0];
     } else {
       printf("Sorry, the max number of rooms is 3. Setting that value to 3.");
       numberOfRooms = 3;

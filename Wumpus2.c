@@ -278,16 +278,17 @@ void arrowShooting(struct GameInfo *gameInfo, int **Rooms, bool *personIsAlive,
     printf("Enter the number of rooms (1..3) into which you want to shoot, "
            "followed by the rooms themselves: ");
     int numberOfRooms;
-    int j;
+    int *arrowRooms;
     int lowestRoom;
     scanf("%d", &numberOfRooms);
     if (numberOfRooms <= 3) {
+      arrowRooms = malloc(sizeof(int) * numberOfRooms);
       gameInfo->arrow = gameInfo->playerRoom;
       int i = 0;
       while (i < numberOfRooms) {
-        scanf("%d", &j);
-        if (adjacentRoom(Rooms[gameInfo->arrow], j)) {
-          gameInfo->arrow = j;
+        scanf("%d", &arrowRooms[i]);
+        if (adjacentRoom(Rooms[gameInfo->arrow], arrowRooms[i])) {
+          gameInfo->arrow = arrowRooms[i];
           if (gameInfo->wumpusRoom == gameInfo->arrow) {
             printf(
                 "Wumpus has just been pierced by your deadly arrow! \n"
@@ -302,7 +303,8 @@ void arrowShooting(struct GameInfo *gameInfo, int **Rooms, bool *personIsAlive,
             return;
           }
         } else {
-          printf("Room %d is not adjacent.  Arrow ricochets...\n", j);
+          printf("Room %d is not adjacent.  Arrow ricochets...\n",
+                 arrowRooms[i]);
           gameInfo->arrow = Rooms[gameInfo->arrow][0];
           int room1 = Rooms[gameInfo->arrow][0];
           int room2 = Rooms[gameInfo->arrow][1];
@@ -324,7 +326,8 @@ void arrowShooting(struct GameInfo *gameInfo, int **Rooms, bool *personIsAlive,
         i++;
       }
       gameInfo->wumpusRoom = Rooms[gameInfo->wumpusRoom][0];
-      gameInfo->arrow = Rooms[gameInfo->playerRoom][0];
+      free(arrowRooms);
+
     } else {
       printf("Sorry, the max number of rooms is 3. Setting that value to 3.");
       numberOfRooms = 3;
